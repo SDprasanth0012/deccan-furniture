@@ -3,7 +3,7 @@ import Credentials from "next-auth/providers/credentials"
 import connectDB from "./lib/db"
 import { User } from "./models/userModels"
 import { compare } from "bcryptjs"
-import Google from "next-auth/providers/Google"
+import Google from "next-auth/providers/google"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
