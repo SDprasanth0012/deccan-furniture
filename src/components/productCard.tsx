@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { FaShoppingCart } from 'react-icons/fa';
 import { useCart } from "@/context/cartContext";
 import WishlistButton from './wishListButton'; // Import the updated WishlistButton
+import Link from 'next/link';
 
 type Product = {
   _id: string;
@@ -34,6 +35,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <div className="rounded-lg p-4 bg-[#e8e0d4] shadow-sm relative group transition-transform transform hover:scale-105 hover:shadow-lg">
       <div className="relative">
+        <Link href={`/products/${product._id}`} >
+        
         <Image
           src={product.image[0]}
           alt={product.name}
@@ -41,6 +44,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           height={300}
           className="w-full h-48 object-cover rounded-lg transition-opacity duration-300 ease-in-out group-hover:opacity-95"
         />
+        </Link>
         <div className="absolute top-2 left-2 right-2 flex items-center justify-between">
           <WishlistButton
             productId={product._id}
@@ -57,9 +61,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </div>
 
       <div className="mt-4">
+      <Link href={`/products/${product._id}`} className='cursor-pointer'>
         <h3 className="text-xl font-bold text-[#4f3d30] tracking-wide mb-2">
           {product.name}
         </h3>
+        </Link>
         <div className="flex items-center justify-between mt-2">
           <div>
             <p className="text-xl font-medium text-[#4f3d30]">
