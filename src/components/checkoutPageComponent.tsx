@@ -9,6 +9,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { NextResponse } from 'next/server';
 
 interface CartItem {
   productId: string;
@@ -94,7 +95,7 @@ const CheckoutPageComponent: React.FC = () => {
     });
 
     const orderResponse = await response.json();
-
+      console.log("after creating orderin server",orderResponse.razorpayOrderId)
     if (orderResponse.status === 'success') {
       await loadRazorpay(); // Ensure Razorpay script is loaded
 
@@ -105,9 +106,47 @@ const CheckoutPageComponent: React.FC = () => {
         name: 'DECCAN FURNITURE',
         description: 'Order Payment',
         order_id: orderResponse.razorpayOrderId, // Ensure you're using the correct order ID
-        handler: function (response: any) {
-          router.push('/thank-you');
+        handler: async function (response: any) {
+          try {
+            console.log(response.razorpay_order_id);
+        
+            // Call the verify payment API
+            const verificationResponse = await fetch('/api/verify', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'x-api-key': process.env.NEXT_PUBLIC_API_KEY!, // Ensure you're using the correct API key
+              },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+              }),
+            });
+        
+            // Check if the response is OK
+            if (!verificationResponse.ok) {
+              throw new Error('Failed to verify payment');
+            }
+        
+            const verificationResult = await verificationResponse.json();
+            console.log(verificationResult.status);
+        
+            if (verificationResult.status === 'success') {
+              alert('Payment Successful!');
+              // Redirect to thank-you page
+              router.push('/thank-you');
+            } else {
+              alert('Payment Verification Failed!');
+            }
+          } catch (error) {
+            console.error('Error during payment verification:', error);
+            alert('An error occurred during payment verification. Please try again.');
+          }
         },
+        
+
+
         prefill: {
           name: data.name,
           email: data.email,
