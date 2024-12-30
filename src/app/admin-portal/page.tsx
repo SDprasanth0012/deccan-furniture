@@ -44,7 +44,7 @@ const Page = () => {
       {activeComponent === 'addProduct' && <AddProductForm />}
       {activeComponent === 'addCategory' && <AddCategory />}
       {activeComponent === 'viewProducts' && <AdminAllProducts />}
-      {activeComponent === 'orders' && <AdminOrder />}
+      {activeComponent === 'orders' && <AdminOrder  />}
     </div>
   );
 };

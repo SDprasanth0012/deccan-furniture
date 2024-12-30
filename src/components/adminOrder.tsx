@@ -98,9 +98,9 @@ const AdminOrder: React.FC = () => {
     : orders.filter(order => order.status === selectedStatus);
 
   return (
-    <div className="grid place-items-center">
-      <div className="w-[90%] lg:w-[50%] max-w-md px-4 py-4">
-        <div className="bg-[#e8e0d4] px-4 py-4 mb-16">
+    <div className="grid place-items-center overflow-x-hidden">
+      <div className="w-[90%] lg:w-[50%] max-w-md px-2 ">
+        <div className="bg-[#e8e0d4] w-[80%] lg:w-full px-4 py-4 mb-16">
           <h1 className="text-3xl font-bold text-center text-[#4d3d30] mb-8">Order List</h1>
           <div className="mb-4">
             <CustomDropdown
@@ -113,14 +113,14 @@ const AdminOrder: React.FC = () => {
         {filteredOrders.length === 0 ? (
           <p className="text-center italic text-[#dfdad5]">No orders available for this status.</p>
         ) : (
-          <ul className="space-y-6">
+          <ul className="space-y-6 ">
             {filteredOrders.map(order => (
-              <li key={order.orderId} className="rounded-lg p-6 bg-[#e8e0d4] hover:shadow-xl transition-shadow duration-300">
+              <li key={order.orderId} className="rounded-lg p-6 bg-[#e8e0d4] w-[80%] lg:w-full hover:shadow-xl transition-shadow duration-300">
                 <h3 className="text-xl text-[#4d3d30]">Order ID: {order.orderId}</h3>
                 <p className="font-semibold">Customer Name: {order.customerName}</p>
                 <p>Email: {order.email}</p>
                 <p>Phone: {order.phone}</p>
-                <p>Address: {order.address}</p>
+                <p className='w-[100%]'>Address: {order.address}</p>
                 <p className="font-medium">Amount Paid: <span className="text-green-500">{order.amountPaid}</span> {order.currency}</p>
                 <p className="font-medium">Amount Due: <span className="text-red-500">{order.amountDue}</span> {order.currency}</p>
                 <p>Status: <span className={`font-bold ${order.status as string === 'completed' ? 'text-green-600' : 'text-yellow-600'}`}>{order.status}</span></p>

@@ -49,7 +49,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="bg-[#f4f0ea] shadow-md fixed top-0 left-0 w-full z-50">
+    <header className="bg-[#f4f0ea] shadow-md fixed top-0 left-0 w-screen  z-50">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
         <div className="text-2xl font-light uppercase">

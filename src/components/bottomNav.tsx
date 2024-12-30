@@ -25,7 +25,7 @@ const BottomNav: React.FC = () => {
   };
 
   return (
-    <nav className="fixed bottom-0 left-0 w-full bg-[#4d3d30] text-white border-t border-gray-700 shadow-lg z-50 lg:hidden">
+    <nav className="fixed bottom-0 left-0 w-screen bg-[#4d3d30] text-white border-t border-gray-700 shadow-lg z-50 lg:hidden">
       <div className="flex justify-around items-center py-2">
         <Link href="/" aria-label="Home">
           <Home className="text-xl" />
