@@ -23,11 +23,11 @@ const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
 const SkeletonCard = () => (
   <div className="border rounded-lg overflow-hidden shadow-sm animate-pulse">
-    <div className="w-full h-48 bg-gray-300"></div>
+    <div className="w-full h-48 bg-[#e8e0d4]"></div>
     <div className="p-4 space-y-2">
-      <div className="w-3/4 h-4 bg-gray-300 rounded"></div>
-      <div className="w-1/2 h-4 bg-gray-300 rounded"></div>
-      <div className="w-1/4 h-6 bg-gray-300 rounded"></div>
+      <div className="w-3/4 h-4 bg-[#e8e0d4]"></div>
+      <div className="w-1/2 h-4 bg-[#e8e0d4]"></div>
+      <div className="w-1/4 h-6 bg-[#e8e0d4]"></div>
     </div>
   </div>
 );
@@ -35,14 +35,14 @@ const SkeletonCard = () => (
 export default function LandingPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [productsByCategory, setProductsByCategory] = useState<Record<string, Product[]>>({});
-  const [loadingCategories, setLoadingCategories] = useState(true);
-  const [loadingProducts, setLoadingProducts] = useState(true);
+
+  const [loading, setLoading] = useState(true);
 
   // Fetch categories
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        setLoadingCategories(true);
+
         const response = await fetch("/api/category", {
           headers: {
             "x-api-key": API_KEY!,
@@ -56,9 +56,7 @@ export default function LandingPage() {
         }
       } catch (error) {
         console.error("Error fetching categories:", error);
-      } finally {
-        setLoadingCategories(false);
-      }
+      } 
     };
     fetchCategories();
   }, []);
@@ -68,7 +66,7 @@ export default function LandingPage() {
     const fetchProducts = async () => {
       if (categories.length === 0) return;
       try {
-        setLoadingProducts(true);
+        setLoading(true);
         const categoryProducts: Record<string, Product[]> = {};
         for (const category of categories) {
           const response = await fetch(`/api/products?category=${category._id}&limit=4`, {
@@ -85,7 +83,7 @@ export default function LandingPage() {
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
-        setLoadingProducts(false);
+        setLoading(false);
       }
     };
 
@@ -98,10 +96,10 @@ export default function LandingPage() {
       <Carousel />
 
       {/* Category-wise Products */}
-      {loadingProducts
-        ? Array.from({ length: 3 }).map((_, index) => (
+      {loading
+        ? Array.from({ length: 4 }).map((_, index) => (
             <div key={index} className="mb-8">
-              <h2 className="text-3xl font-normal text-center mb-4 border-t border-[#4d3d30] pt-4 animate-pulse bg-gray-300 h-8 rounded"></h2>
+              <h2 className="text-3xl font-normal text-center mb-4 border-t border-[#4d3d30] pt-4 animate-pulse bg-[#e8e0d4] h-8 rounded"></h2>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {Array.from({ length: 4 }).map((_, idx) => (
                   <SkeletonCard key={idx} />
@@ -118,7 +116,7 @@ export default function LandingPage() {
                 {category}
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {loadingProducts
+                {loading
                   ? Array.from({ length: 4 }).map((_, idx) => <SkeletonCard key={idx} />)
                   : productsByCategory[category]?.slice(0, 4).map((product) => (
                       <Link key={product._id} href={`/products/${product._id}`}>
