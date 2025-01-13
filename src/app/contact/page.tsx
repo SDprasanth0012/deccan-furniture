@@ -90,12 +90,8 @@ const ContactUs: React.FC = () => {
         </div>
       </section>
 
-      {/* Footer Section */}
-      <section className="bg-[#4d3d30] text-[#f4f0ea] py-8 text-center">
-        <p className="text-sm">
-          © {new Date().getFullYear()} Deccan Furniture. All rights reserved.
-        </p>
-      </section>
+
+    
     </div>
   );
 };
