@@ -19,7 +19,7 @@ type ProductCardProps = {
   product: Product;
 };
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardProps>= ({ product }) => {
   const { addToCart } = useCart();
   const handleAddToCart = () => {
     addToCart({
@@ -31,7 +31,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     });
   };
 
-
+   console.log("each product is rendered here", product)
   return (
     <div className="rounded-lg p-4 bg-[#e8e0d4] shadow-sm relative group transition-transform transform hover:scale-105 hover:shadow-lg">
       <div className="relative">
@@ -88,6 +88,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </div>
     </div>
   );
-};
+}
 
 export default ProductCard;

@@ -6,6 +6,7 @@ import BottomNav from '@/components/bottomNav';
 import { CartProvider } from '@/context/cartContext';
 import { WishlistProvider } from '@/context/wishListContext';
 import { SessionProvider } from 'next-auth/react';
+import Footer from '@/components/footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -30,6 +31,7 @@ export default function RootLayout({
               <Header />
               <div className="py-12">{children}</div>
               <BottomNav />
+              <Footer />
             </WishlistProvider>
           </CartProvider>
           </SessionProvider>
