@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react";
 import Carousel from "@/components/carousel";
 import Link from "next/link";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 type Product = {
   _id: string;
@@ -21,13 +23,29 @@ type Category = {
 
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
+// const SkeletonCard = () => (
+//   <div className="border rounded-lg overflow-hidden shadow-sm animate-pulse">
+//     <div className="w-full h-48 bg-[#e8e0d4]"></div>
+//     <div className="p-4 space-y-2">
+//       <div className="w-3/4 h-4 bg-[#e8e0d4]"></div>
+//       <div className="w-1/2 h-4 bg-[#e8e0d4]"></div>
+//       <div className="w-1/4 h-6 bg-[#e8e0d4]"></div>
+//     </div>
+//   </div>
+// );
+
 const SkeletonCard = () => (
-  <div className="border rounded-lg overflow-hidden shadow-sm animate-pulse">
-    <div className="w-full h-48 bg-[#e8e0d4]"></div>
-    <div className="p-4 space-y-2">
-      <div className="w-3/4 h-4 bg-[#e8e0d4]"></div>
-      <div className="w-1/2 h-4 bg-[#e8e0d4]"></div>
-      <div className="w-1/4 h-6 bg-[#e8e0d4]"></div>
+  <div className="border rounded-lg overflow-hidden shadow-sm p-4">
+    {/* Image Skeleton */}
+    <div style={{ backgroundColor: '#e8e0d4' }}>
+      <Skeleton height={192} width="100%" baseColor="#e8e0d4" highlightColor="#f2ede7" />
+    </div>
+
+    {/* Text Skeletons */}
+    <div className="mt-4 space-y-2">
+      <Skeleton height={16} width="75%" baseColor="#e8e0d4" highlightColor="#f2ede7" />
+      <Skeleton height={16} width="50%" baseColor="#e8e0d4" highlightColor="#f2ede7" />
+      <Skeleton height={24} width="25%" baseColor="#e8e0d4" highlightColor="#f2ede7" />
     </div>
   </div>
 );

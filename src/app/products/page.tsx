@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { FaSearch } from "react-icons/fa";
 import ProductCard from "@/components/productCard";
 import CustomDropdown from "@/components/customDropDown";
+import Loading from "./loading";
 
 type Review = {
   name: string;
@@ -43,7 +44,7 @@ const sortOptions = [
   { value: "price-desc", label: "Price: High to Low" },
 ];
 
-async function  ProductPageContent() {
+function  ProductPageContent() {
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category") || ""; // Fetch category from the URL
   console.log(initialCategory)
@@ -53,7 +54,7 @@ async function  ProductPageContent() {
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sortOption, setSortOption] = useState<string>("");
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -101,6 +102,8 @@ async function  ProductPageContent() {
         }
       } catch (error) {
         console.error("Error fetching products:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -108,7 +111,12 @@ async function  ProductPageContent() {
   }, [selectedCategory, selectedSubcategory, searchTerm, sortOption]);
 
   return (
-    <div className="container mx-auto px-4">
+    <div>
+      { 
+      loading? (
+        <Loading />
+      ) 
+    : (<div className="container mx-auto px-4">
       {/* Category Section */}
       <div className="bg-transparent mb-4 py-4">
         <div className="mb-4 text-center">
@@ -200,13 +208,15 @@ async function  ProductPageContent() {
           <p className="text-center col-span-full">No products found</p>
         )}
       </div>
+    </div>)
+     }
     </div>
   );
 }
 
 export default  function ProductPage() {
   return (
-   <Suspense fallback={<div>Loading...</div>}>
+   <Suspense >
 
       <ProductPageContent />
    </Suspense>
