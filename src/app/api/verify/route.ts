@@ -37,11 +37,23 @@ export async function POST(request: NextRequest) {
           paymentStatus: 'completed',
           status: 'pending', // Adjust based on your workflow
            // Capture the amount if necessary
+          paymentId: razorpay_payment_id,
         }
       );
 
       if (updatedOrder.modifiedCount > 0) { // Use modifiedCount instead of nModified
-        return NextResponse.json({ status: 'success', message: 'Payment verified and order updated successfully!' }, { status: 200 });
+        const orderDetails = await Order.findOne({ orderId: razorpay_order_id });
+
+        if (orderDetails) {
+          // Send the updated order details to the client
+          return NextResponse.json({
+            status: 'success',
+            message: 'Payment verified and order updated successfully!',
+            orderDetails, // Include the order details in the response
+          }, { status: 200 });
+        } else {
+          return NextResponse.json({ status: 'error', message: 'Order not found after update.' }, { status: 404 });
+        }
       } else {
         return NextResponse.json({ status: 'error', message: 'Order not found or not updated.' }, { status: 404 });
       }

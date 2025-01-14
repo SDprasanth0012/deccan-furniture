@@ -72,6 +72,7 @@ export async function POST(request: NextRequest) {
       orderId: razorpayOrder.id, // Use Razorpay order ID
       paymentStatus: 'pending',
       status: 'created',
+      paymentId: `not yet created for ${razorpayOrder.id}`,
     });
 
     // Save the order in MongoDB

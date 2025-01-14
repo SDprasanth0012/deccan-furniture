@@ -18,7 +18,13 @@ interface CartItem {
   name?: string;
   image?: string;
 }
-
+interface OrderDetails {
+  orderId: string;
+  paymentStatus: string;
+  status: string;
+  amount: number;
+  createdAt: string;
+}
 const CheckoutPageComponent: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -91,7 +97,7 @@ const CheckoutPageComponent: React.FC = () => {
         'Content-Type': 'application/json',
         'x-api-key': process.env.NEXT_PUBLIC_API_KEY!,
       },
-      body: JSON.stringify(orderData),
+      body: JSON.stringify(orderData), 
     });
 
     const orderResponse = await response.json();
@@ -133,7 +139,15 @@ const CheckoutPageComponent: React.FC = () => {
             console.log(verificationResult.status);
         
             if (verificationResult.status === 'success') {
-              alert('Payment Successful!');
+                // Retrieve the current orders array from localStorage, or create an empty array if none exists
+                const orders: OrderDetails[] = JSON.parse(localStorage.getItem('orders') || '[]');
+
+                // Push the new order details to the orders array
+                orders.push(verificationResult.orderDetails);
+              
+                // Store the updated orders array back in localStorage
+                localStorage.setItem('orders', JSON.stringify(orders));
+              
               // Redirect to thank-you page
               router.push('/thank-you');
             } else {

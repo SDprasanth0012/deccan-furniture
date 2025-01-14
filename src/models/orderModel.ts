@@ -20,6 +20,7 @@ interface IOrder extends Document {
   currency: string; // Currency type (e.g., INR)
   orderId: string; // Unique order ID
   paymentStatus: 'pending' | 'completed' | 'failed'; // Payment status
+  paymentId: string; // Unique
   status: 'created' | 'pending' | 'shipped' | 'delivered' | 'canceled'; // Order status
 }
 
@@ -54,6 +55,7 @@ const OrderSchema: Schema<IOrder> = new Schema(
       enum: ['created',  'shipped', 'delivered', 'canceled'],
       default: 'created',
     },
+    paymentId: { type: String }, // Unique payment ID
   },
   { timestamps: true } // Automatically manage createdAt and updatedAt
 );
