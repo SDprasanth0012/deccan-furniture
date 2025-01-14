@@ -94,7 +94,7 @@ export default function LandingPage() {
     <div className="container mx-auto px-4">
       {/* Carousel */}
       <Carousel />
-
+      
       {/* Category-wise Products */}
       {loading
         ? Array.from({ length: 4 }).map((_, index) => (
@@ -107,14 +107,40 @@ export default function LandingPage() {
               </div>
             </div>
           ))
-        : Object.keys(productsByCategory).map((category) => (
+        : Object.keys(productsByCategory).map((category, index) => (
             <div key={category} className="mb-8">
+              <div className="flex justify-between border-t border-[#4d3d30]">
+              {/*category title*/}
               <h2
-                className="text-3xl font-normal text-center mb-4 border-t border-[#4d3d30] pt-4"
+                className="text-3xl font-normal w-full lg:w-fit  text-center mb-4  pt-4"
                 style={{ color: "#4d3d30" }}
               >
                 {category}
               </h2>
+              {/* Explore More Button */}
+              <div className="text-center hidden lg:block  w-fit mt-4">
+                  <Link href={`/products?category=${categories[index]._id}`}>
+                    <button className="flex items-center justify-center space-x-2 px-4 py-2 bg-[#4d3d30] text-white rounded-full hover:bg-[#3b2f25] transition">
+                      <span>Explore More</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2}
+                        stroke="currentColor"
+                        className="w-4 h-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M8 9l4-4m0 0l4 4m-4-4v14"
+                        />
+                      </svg>
+                    </button>
+                  </Link>
+                </div>
+              </div>
+              {/* product grid */}
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {loading
                   ? Array.from({ length: 4 }).map((_, idx) => <SkeletonCard key={idx} />)
@@ -144,6 +170,29 @@ export default function LandingPage() {
                       </Link>
                     ))}
               </div>
+              {/* explore more button for mobile devices*/}
+              <div className="text-center  flex justify-center lg:hidden    mt-4">
+                  <Link href={`/products?category=${categories[index]._id}`}>
+                  <button className="flex items-center justify-center space-x-2 px-4 py-2 bg-[#4d3d30] text-white rounded-full hover:bg-[#3b2f25] transition">
+    <span className="text-[10px]">Explore More</span>
+    <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  viewBox="0 0 24 24"
+  strokeWidth={2}
+  stroke="currentColor"
+  className="w-4 h-4"
+>
+  <path
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    d="M9 5l7 7-7 7"
+  />
+</svg>
+
+  </button>
+                  </Link>
+                </div>
             </div>
           ))}
     </div>
