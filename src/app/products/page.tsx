@@ -43,7 +43,7 @@ const sortOptions = [
   { value: "price-desc", label: "Price: High to Low" },
 ];
 
-function ProductPageContent() {
+async function  ProductPageContent() {
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category") || ""; // Fetch category from the URL
   console.log(initialCategory)
@@ -204,7 +204,7 @@ function ProductPageContent() {
   );
 }
 
-export default async function ProductPage() {
+export default  function ProductPage() {
   return (
    <Suspense fallback={<div>Loading...</div>}>
 
