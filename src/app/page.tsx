@@ -5,7 +5,7 @@ import Carousel from "@/components/carousel";
 import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-
+import { useSession } from "next-auth/react"
 type Product = {
   _id: string;
   name: string;
@@ -55,7 +55,8 @@ export default function LandingPage() {
   const [productsByCategory, setProductsByCategory] = useState<Record<string, Product[]>>({});
 
   const [loading, setLoading] = useState(true);
-
+  const { data: session } = useSession()
+  console.log(session)
   // Fetch categories
   useEffect(() => {
     const fetchCategories = async () => {
