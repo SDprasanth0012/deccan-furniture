@@ -135,7 +135,7 @@ function  ProductPageContent() {
         <div className="flex flex-wrap justify-start space-x-2 ">
           {categories.map((category) => (
             <div
-              
+              key={category._id}
               onClick={() => {
                 setSelectedCategory(category._id);
                 setSelectedSubcategory("");
