@@ -1,6 +1,6 @@
 import { SetStateAction, useEffect, useState } from 'react';
 import CustomDropdown from '@/components/customDropDown';
-
+import Image from 'next/image';
 interface IOrderItem {
   productId: string;
   quantity: number;
@@ -166,7 +166,7 @@ const AdminOrder: React.FC = () => {
   <div className="mb-4">
     <p className="font-medium">Amount Paid: <span className="text-green-500">{order.amountPaid}</span> {order.currency}</p>
     <p className="font-medium">Amount Due: <span className="text-red-500">{order.amountDue}</span> {order.currency}</p>
-    <p className="font-medium">Payment Id: <span className="text-red-500">{order.paymentId}</span> </p>
+    <p className="font-medium">Payment Id: <span className="text-red-500">{order.paymentId}</span> {order.currency}</p>
   </div>
 
   {/* Status and Payment Status Section */}
@@ -190,7 +190,7 @@ const AdminOrder: React.FC = () => {
     <ul className="list-none p-0 space-y-4">
       {order.items.map(item => (
         <li key={item.productId} className="flex items-center bg-white rounded-lg shadow p-4 transition-transform transform hover:scale-105">
-          <img src={item.image} alt={item.name} className="w-16 h-16 mr-4 rounded shadow-md" />
+          <Image src={item.image} alt={item.name}  className="w-16 h-16 mr-4 rounded shadow-md" />
           <div className="flex flex-col">
             <span className="text-lg font-semibold text-[#4d3d30]">{item.name}</span>
             <span className="text-sm text-gray-600">Quantity: {item.quantity}</span>

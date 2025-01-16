@@ -6,6 +6,7 @@ import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useSession } from "next-auth/react"
+import Image from "next/image";
 type Product = {
   _id: string;
   name: string;
@@ -166,7 +167,7 @@ export default function LandingPage() {
                   : productsByCategory[category]?.slice(0, 4).map((product) => (
                       <Link key={product._id} href={`/products/${product._id}`}>
                         <div className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-                          <img
+                          <Image
                             src={product.image[0] || "/placeholder.jpg"}
                             alt={product.name}
                             className="w-full h-48 object-cover"

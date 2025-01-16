@@ -105,9 +105,11 @@ const ProfilePage: React.FC = () => {
           <ul className="space-y-4">
             {order.items.map((item) => (
               <li key={item._id} className="flex items-center space-x-6">
-                <img
+                <Image
                   src={item.image}
                   alt={item.name}
+                  width={30}
+                  height={30}
                   className="w-20 h-20 object-cover rounded border"
                 />
                 <div>
