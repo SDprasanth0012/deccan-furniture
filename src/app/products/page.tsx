@@ -153,7 +153,7 @@ function  ProductPageContent() {
       </div>
       <div className="flex ">
       {/* Sorting Dropdown */}
-      <div className="mb-4 w-2/5 ml-auto">
+      <div className="mb-4 w-2/5 mr-auto">
         <CustomDropdown
           options={sortOptions}
           value={sortOption}

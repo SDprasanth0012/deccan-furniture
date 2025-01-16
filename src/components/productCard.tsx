@@ -214,7 +214,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </ul>
 
         {/* Price Section */}
-        <div>
+        <div className='mb-2'>
           <p className="text-[#4f3d30] text-lg font-semibold">
             ₹{product.price.toFixed(2)}
           </p>
@@ -228,7 +228,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         {/* Add to Cart Button */}
         <Button
           onClick={handleAddToCart}
-          className="w-full mt-auto bg-[#4f3d30] text-[#f4f0ea] flex items-center justify-center space-x-2 px-3 py-2 rounded-md font-medium text-sm hover:bg-opacity-90 transition"
+          className="w-full mt-auto  bg-[#4f3d30] text-[#f4f0ea] flex items-center justify-center space-x-2 px-3 py-2 rounded-3xl font-medium text-sm hover:bg-opacity-90 transition"
         >
           <FaShoppingCart size={16} />
           <span>Add to Cart</span>

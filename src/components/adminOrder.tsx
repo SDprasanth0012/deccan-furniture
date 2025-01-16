@@ -190,7 +190,7 @@ const AdminOrder: React.FC = () => {
     <ul className="list-none p-0 space-y-4">
       {order.items.map(item => (
         <li key={item.productId} className="flex items-center bg-white rounded-lg shadow p-4 transition-transform transform hover:scale-105">
-          <Image src={item.image} alt={item.name}  className="w-16 h-16 mr-4 rounded shadow-md" />
+          <Image src={item.image} alt={item.name} width ={ 30 } height={30}  className="w-16 h-16 mr-4 rounded shadow-md" />
           <div className="flex flex-col">
             <span className="text-lg font-semibold text-[#4d3d30]">{item.name}</span>
             <span className="text-sm text-gray-600">Quantity: {item.quantity}</span>
