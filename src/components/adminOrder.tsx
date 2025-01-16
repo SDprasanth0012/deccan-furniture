@@ -98,9 +98,9 @@ const AdminOrder: React.FC = () => {
     : orders.filter(order => order.status === selectedStatus);
 
   return (
-    <div className="grid place-items-center overflow-x-hidden">
-      <div className="w-[90%] lg:w-[50%] max-w-md px-2 ">
-        <div className="bg-[#e8e0d4] w-[80%] lg:w-full px-4 py-4 mb-16">
+    <div className="grid place-items-center ">
+      <div className="w-full lg:w-[50%] max-w-md  px-2 ">
+        <div className="bg-[#e8e0d4]  w-full px-4 py-4 mb-16">
           <h1 className="text-3xl font-bold text-center text-[#4d3d30] mb-8">Order List</h1>
           <div className="mb-4">
             <CustomDropdown
@@ -115,7 +115,7 @@ const AdminOrder: React.FC = () => {
         ) : (
           <ul className="space-y-6 ">
             {filteredOrders.map(order => (
-              <li key={order.orderId} className="rounded-lg p-6 bg-[#e8e0d4] w-[80%] lg:w-full hover:shadow-xl transition-shadow duration-300">
+              <li key={order.orderId} className="rounded-lg p-3 bg-[#e8e0d4]  w-full hover:shadow-xl transition-shadow duration-300">
                 <h3 className="text-xl text-[#4d3d30]">Order ID: {order.orderId}</h3>
                 <p className="font-semibold">Customer Name: {order.customerName}</p>
                 <p>Email: {order.email}</p>
