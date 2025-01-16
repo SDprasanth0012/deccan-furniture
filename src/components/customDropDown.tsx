@@ -11,9 +11,10 @@ interface CustomDropdownProps {
   value: string;
   onChange: (option: Option) => void;
   backgroundColor?: string; // Optional backgroundColor prop
+  placeholder?: string
 }
 
-const CustomDropdown: React.FC<CustomDropdownProps> = ({ options, value, onChange, backgroundColor = "#e8e0d4" }) => {
+const CustomDropdown: React.FC<CustomDropdownProps> = ({ options, value, onChange,  placeholder = "Select an option", backgroundColor = "#e8e0d4" }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLUListElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -75,7 +76,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({ options, value, onChang
         className="flex h-10 w-full rounded-md border border-[#4d3d30] px-3 py-2 text-sm text-[#4d3d30] placeholder:text-[#4d3d30] placeholder:text-opacity-60 ring-offset-[#ede7ea] focus-visible:outline-2 focus-visible:outline-[#4d3d30]"
         ref={buttonRef}
       >
-        {value ? options.find(option => option.value === value)?.label : "Select an option"}
+        {value ? options.find(option => option.value === value)?.label : placeholder}
       </button>
       <ul
         ref={dropdownRef}

@@ -65,7 +65,7 @@ function  ProductPageContent() {
         });
         if (response.ok) {
           const data = await response.json();
-          setCategories([{ _id: "", name: "All Products", subcategories: [] }, ...data]);
+          setCategories([{ _id: "", name: "ALL PRODUCTS", subcategories: [] }, ...data]);
         } else {
           console.error("Failed to fetch categories");
         }
@@ -121,26 +121,26 @@ function  ProductPageContent() {
       <div className="bg-transparent mb-4 py-4">
         <div className="mb-4 text-center">
           <h2
-            className="text-4xl lg:text-6xl font-semibold border-t border-[#4d3d30] pt-4"
+            className="text-4xl lg:text-6xl font-normal border-t border-[#4d3d30] pt-4"
             style={{ color: "#4d3d30" }}
           >
             {selectedCategory
               ? categories.find((cat) => cat._id === selectedCategory)?.name
-              : "All Products"}
-            {selectedSubcategory && ` - ${selectedSubcategory}`}
+              : "ALL PRODUCTS"}
+            
           </h2>
         </div>
 
         {/* List of Categories */}
-        <div className="flex flex-wrap justify-start space-x-2">
+        <div className="flex flex-wrap justify-start space-x-2 ">
           {categories.map((category) => (
             <div
-              key={category._id}
+              
               onClick={() => {
                 setSelectedCategory(category._id);
                 setSelectedSubcategory("");
               }}
-              className={`px-3 py-1 rounded-full border border-[#4d3d30] text-[#4d3d30] cursor-pointer ${
+              className={`px-3 py-1 mb-2 rounded-full border border-[#4d3d30] text-[#4d3d30] cursor-pointer ${
                 selectedCategory === category._id
                   ? "bg-[#4d3d30] text-[#f4f0ea]"
                   : "bg-transparent hover:bg-[#e8e0d4] hover:text-[#4d3d30]"
@@ -151,12 +151,13 @@ function  ProductPageContent() {
           ))}
         </div>
       </div>
-
+      <div className="flex ">
       {/* Sorting Dropdown */}
-      <div className="mb-4 w-2/4 ml-auto">
+      <div className="mb-4 w-2/5 ml-auto">
         <CustomDropdown
           options={sortOptions}
           value={sortOption}
+          placeholder="Sort by"
           onChange={(option) => setSortOption(option.value)}
         />
       </div>
@@ -174,10 +175,15 @@ function  ProductPageContent() {
           <FaSearch className="absolute top-1/2 right-3 transform -translate-y-1/2 text-[#4d3d30]" />
         </div>
       </div>
-
+      </div>
       {/* Subcategory Section */}
       {selectedCategory && (
+        <div>
+        <div className="text-3xl text-center lg:text-6xl font-normal border-t border-[#4d3d30] mb-4 pt-4" style={{ color: "#4d3d30" }}>
+  {selectedSubcategory && `${selectedSubcategory}`}
+</div>
         <div className="mb-4 overflow-x-auto whitespace-nowrap">
+         
           <div className="flex space-x-2">
             {categories
               .find((cat) => cat._id === selectedCategory)
@@ -195,6 +201,7 @@ function  ProductPageContent() {
                 </div>
               ))}
           </div>
+        </div>
         </div>
       )}
 
