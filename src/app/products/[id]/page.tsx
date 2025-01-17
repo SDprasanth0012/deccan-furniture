@@ -358,6 +358,7 @@ const ProductPage: React.FC = () => {
         quantity: 1,
         price: product.price,
         name: product.name,
+        discount: product.discount,
         image: product.image[0],
       });
     }
@@ -370,6 +371,7 @@ const ProductPage: React.FC = () => {
         quantity: 1,
         price: product.price,
         name: product.name,
+        discount : product.discount,
         image: product.image[0],
       });
       router.push(`/checkout?productId=${product._id}&quantity=1`);
