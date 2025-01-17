@@ -312,6 +312,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import ReviewPopup from "@/components/reviewPopup";
 import ProductGallery from "./productImage";
+import ProductSlider from "../productSlider";
 
 interface Review {
   name: string;
@@ -326,6 +327,8 @@ interface Product {
   image: string[];
   description: string;
   price: number;
+  category : string;
+  subcategory: string;
   discount: number;
   features: string[];
   rating: number;
@@ -472,51 +475,59 @@ const ProductPage: React.FC = () => {
         {/* Product Gallery with Swiper */}
         <ProductGallery images = { product.image} />
         {/* Product Information */}
-        <div className="md:w-1/2 md:pl-8 pt-6 md:pt-0">
-          <h1 className="text-3xl font-semibold mb-4">{product.name}</h1>
-          <div className="flex items-center mb-4">
-            <span className="text-2xl font-semibold">₹{finalPrice.toFixed(2)}</span>
+        <div className="mt-6 md:w-1/2 md:pl-8 pt-6 md:pt-0">
+          <div className="flex flex-col items-start mb-2">
+            <span className="text-4xl  font-normal">₹{finalPrice.toFixed(2)}</span>
             {product.discount > 0 && (
-              <span className="text-lg font-medium line-through ml-4">M.R.P:₹{product.price.toFixed(2)}</span>
+              <span className="text-3xl  font-extralight">
+                {"-"+product.discount+"%   "}
+
+              <span className="text-lg font-light line-through ">
+                M.R.P:₹{product.price.toFixed(2)} </span>
+              </span>
             )}
           </div>
-          <div className="flex items-center mb-6">
+
+          <div className="flex items-center ">
             {renderRating(product.rating)}
             <span className="ml-4 text-sm">{product.numReviews} reviews</span>
           </div>
+          <p className="text-xs mb-2 italic">{product.rating} out of 5</p>
+          <h1 className="text-xl  font-semibold uppercase mb-6">{product.name}</h1>
 
           <div className="flex space-x-4">
             <Button
               onClick={handleBuyNow}
-              className="bg-[#4d3d30] text-white w-full py-3 rounded-lg shadow-md hover:bg-[#3d2e25] transition mb-4"
+              className="bg-[#4d3d30] text-white w-full py-3 rounded-full shadow-md hover:bg-[#3d2e25] transition mb-4"
             >
               Buy Now
             </Button>
             <Button
               onClick={handleAddToCart}
-              className="bg-[#4d3d30] text-white w-full py-3 rounded-lg shadow-md hover:bg-[#3d2e25] transition"
+              className="bg-[#4d3d30] text-white w-full py-3 rounded-full shadow-md hover:bg-[#3d2e25] transition"
             >
               <FaShoppingCart className="mr-2" /> Add to Cart
             </Button>
           </div>
 
           {/* Description */}
-          <div className="mt-6">
-            <h3 className="text-xl font-semibold mb-4">Description</h3>
-            <p className="text-sm">{product.description}</p>
-            <h3 className="text-xl font-semibold mb-4">Product Features</h3>
-            <ul className="list-disc pl-5 space-y-2">
+          <div className="mt-4">
+            <h3 className="text-xl font-normal mb-4">DESCRIPTION</h3>
+            <p className="text-md uppercase mb-1">{product.description}</p>
+            <ul className="list-disc pl-5 ">
               {product.features.map((feature, index) => (
-                <li key={index} className="text-sm">{feature}</li>
+                <li key={index} className="text-md uppercase">{feature}</li>
               ))}
             </ul>
           </div>
-
+          <ProductSlider
+           category={product.category as string} 
+           />
           {/* Reviews */}
           <div className="mt-8">
-            <h3 className="text-xl font-semibold mb-4">Customer Reviews</h3>
+            <h3 className="text-xl font-normal uppercase mb-4">Customer Reviews</h3>
             {product.reviews.length > 0 ? (
-              <ul className="space-y-4">
+              <ul className="">
                 {product.reviews.map((review, index) => (
                   <li key={index} className="border-b pb-4">
                     <div className="font-semibold">{review.name}</div>
