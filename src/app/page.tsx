@@ -6,7 +6,7 @@ import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useSession } from "next-auth/react"
-import Image from "next/image";
+
 type Product = {
   _id: string;
   name: string;
@@ -138,7 +138,7 @@ export default function LandingPage() {
                 {category}
               </h2>
               {/* Explore More Button */}
-              <div className="text-center hidden lg:block  w-fit mt-4">
+              <div className="text-center hidden  lg:block  w-fit mt-4">
                   <Link href={`/products?category=${categories[index]._id}`}>
                     <button className="flex items-center justify-center space-x-2 px-4 py-2 bg-[#4d3d30] text-white rounded-full hover:bg-[#3b2f25] transition">
                       <span>Explore More</span>
@@ -167,20 +167,20 @@ export default function LandingPage() {
                   : productsByCategory[category]?.slice(0, 4).map((product) => (
                       <Link key={product._id} href={`/products/${product._id}`}>
                         <div className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-                          <Image
+                          <img
                             src={product.image[0] || "/placeholder.jpg"}
                             alt={product.name}
                             className="w-full h-48 object-cover"
                           />
                           <div className="p-4">
-                            <h3 className="font-bold text-lg truncate">{product.name}</h3>
-                            <p className="text-sm text-gray-500">{product.description}</p>
+                            <h3 className="font-semibold text-lg truncate">{product.name}</h3>
+                            <p className="text-sm opacity-60 text-[#4d3d30]">{product.description}</p>
                             <div className="mt-2">
-                              <span className="text-[#4d3d30] font-bold">
+                              <span className="text-[#4d3d30] text-md font-bold">
                                 ₹{(product.price * (1 - product.discount / 100)).toFixed(2)}
                               </span>
-                              {product.discount > 0 && (
-                                <span className="ml-2 line-through text-gray-400">
+                              {product.discount > 0 && ( 
+                                <span className="ml-2 line-through text-[#4d3d30] opacity-60">
                                   ₹{product.price.toFixed(2)}
                                 </span>
                               )}
@@ -194,7 +194,7 @@ export default function LandingPage() {
               <div className="text-center  flex justify-center lg:hidden    mt-4">
                   <Link href={`/products?category=${categories[index]._id}`}>
                   <button className="flex items-center justify-center space-x-2 px-4 py-2 bg-[#4d3d30] text-white rounded-full hover:bg-[#3b2f25] transition">
-    <span className="text-[10px]">Explore More</span>
+    <span className="text-[10px]">SHOP {categories[index].name}</span>
     <svg
   xmlns="http://www.w3.org/2000/svg"
   fill="none"

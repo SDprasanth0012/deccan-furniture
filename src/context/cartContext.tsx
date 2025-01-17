@@ -8,6 +8,7 @@ interface CartItem {
   price: number;
   name?: string; // Optional field
   image?: string; // Optional field for image URL
+  discount?: number; // Optional field for discount
 }
 
 interface CartContextType {

@@ -140,6 +140,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       price: product.price,
       name: product.name,
       image: product.image[0],
+      discount: product.discount
     });
   };
 
@@ -148,9 +149,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     for (let i = 0; i < 5; i++) {
       stars.push(
         i < rating ? (
-          <FaStar key={i} className="text-yellow-400" />
+          <FaStar key={i} className="text-[#4d3d30]" />
         ) : (
-          <FaRegStar key={i} className="text-gray-300" />
+          <FaRegStar key={i} className="text-[#4d3d30] opacity-50" />
         )
       );
     }
@@ -158,7 +159,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   };
 
   return (
-    <div className="relative rounded-lg bg-[#f4f0ea] shadow-md hover:shadow-lg overflow-hidden transition-transform transform hover:scale-105 group flex flex-col h-full">
+    <div className="relative rounded-lg bg-[#e8e0d4]  hover:shadow-lg overflow-hidden transition-transform transform hover:scale-105 group flex flex-col h-full">
       {/* Product Image */}
       <div className="relative ">
         <Link href={`/products/${product._id}`}>
@@ -188,7 +189,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       {/* Product Info */}
       <div className="p-4 flex-grow flex flex-col">
         <Link href={`/products/${product._id}`} className="block cursor-pointer">
-          <h3 className="text-lg font-bold text-[#4f3d30] truncate mb-2">
+          <h3 className="text-lg font-bold text-[#4d3d30] truncate mb-2">
             {product.name}
           </h3>
         </Link>
@@ -196,30 +197,30 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         {/* Rating */}
         <div className="flex items-center mb-2 space-x-1">
           {renderStars(product.rating)}
-          <span className="text-sm text-gray-500">
+          <span className="text-sm text-[#4d3d30] opacity-70">
             ({product.numReviews} {product.numReviews === 1 ? 'review' : 'reviews'})
           </span>
         </div>
 
         {/* Product Description */}
-        <p className="text-sm text-gray-600 mb-2 line-clamp-3">
+        <p className="text-md text-[#4d3d30] opacity-80 mb-2 line-clamp-3">
           {product.description}
         </p>
 
         {/* Product Features */}
-        <ul className="text-sm text-gray-600 mb-4 list-disc pl-4 line-clamp-2">
+        <ul className="text-sm text-[#4d3d30] opacity-80 mb-4 list-disc pl-4 line-clamp-2">
           {product.features.slice(0, 2).map((feature, index) => (
             <li key={index}>{feature}</li>
           ))}
         </ul>
 
         {/* Price Section */}
-        <div className='mb-2'>
+        <div className='mb-2 '>
           <p className="text-[#4f3d30] text-lg font-semibold">
             ₹{product.price.toFixed(2)}
           </p>
           {product.discount > 0 && (
-            <p className="text-sm line-through text-gray-500">
+            <p className="text-sm line-through text-[#4d3d30] opacity-70">
               ₹{((product.price * 100) / (100 - product.discount)).toFixed(2)}
             </p>
           )}

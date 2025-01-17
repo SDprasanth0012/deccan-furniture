@@ -9,7 +9,8 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { NextResponse } from 'next/server';
+import { FaTrashAlt } from 'react-icons/fa';
+
 
 interface CartItem {
   productId: string;
@@ -17,6 +18,7 @@ interface CartItem {
   price: number;
   name?: string;
   image?: string;
+  discount?: number;
 }
 interface OrderDetails {
   orderId: string;
@@ -29,7 +31,7 @@ const CheckoutPageComponent: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { cart, removeFromCart } = useCart();
-
+  const [totalDiscount, setTotalDiscount ] = useState(0);
   const [checkoutItems, setCheckoutItems] = useState<CartItem[]>([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState('upi');
@@ -60,8 +62,23 @@ const CheckoutPageComponent: React.FC = () => {
   }, [searchParams, cart]);
 
   useEffect(() => {
-    const total = checkoutItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const { total, discount  } = checkoutItems.reduce(
+      (acc, item) => {
+        const discountPercent = item.discount ?? 0; // Default to 0 if discount is undefined
+        const discountedPrice = item.price * (1 - discountPercent / 100); // Calculate the discounted price
+        
+        const totalItemDiscount = item.price - discountedPrice; // Discount per item
+    
+        acc.total += discountedPrice * item.quantity; // Add discounted price to total
+        acc.discount += totalItemDiscount * item.quantity; // Add item discount to total discount
+    
+        return acc;
+      },
+      { total: 0, discount: 0 } // Initial values for totalPrice and totalDiscount
+    );
+    
     setTotalPrice(total);
+    setTotalDiscount(discount);
   }, [checkoutItems]);
 
   const handleRemoveItem = (productId: string) => {
@@ -183,35 +200,109 @@ const CheckoutPageComponent: React.FC = () => {
   return (
 
     <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-4">Checkout</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <h1 className="text-3xl font-normal text-center mb-4">Checkout</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       
         <div>
           {checkoutItems.map(item => (
-            <div key={item.productId} className="flex items-center justify-between mb-4 p-4 border rounded-lg">
-              <div className="flex items-center">
-                <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded-lg mr-4" />
-                <div>
-                  <p className="font-bold">{item.name}</p>
-                  <p>Quantity: {item.quantity}</p>
-                  <p>Price: ${(item.price * item.quantity).toFixed(2)}</p>
-                </div>
-              </div>
-              <Button
-                onClick={() => handleRemoveItem(item.productId)}
-                className="bg-red-500 text-white hover:bg-red-700"
-              >
-                Remove
-              </Button>
-            </div>
+  
+  <div key={item.productId} className="flex items-center justify-between  p-4 border rounded-lg  bg-[#e8e0d4]">
+  {/* Product Information */}
+  <div className="flex items-center">
+    <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded-lg mr-4" />
+    <div>
+      <p className="font-bold text-lg">{item.name}</p>
+      <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
+
+      {/* Price after discount */}
+      <p className="text-xl font-semibold text-gray-800">
+         ₹{(item.price * item.quantity * (1 - (item.discount ?? 0) / 100)).toFixed(2)}
+      </p>
+
+      {/* Show the original price with strikethrough */}
+      {item.discount && (
+        <p className="text-sm text-gray-500 line-through">
+          M R P : ₹{(item.price * item.quantity).toFixed(2)}
+        </p>
+      )}
+
+      {/* Show the discount percentage if available */}
+      {item.discount && (
+        <p className="text-sm text-green-500 font-semibold">
+          {item.discount}% OFF
+        </p>
+      )}
+    </div>
+  </div>
+
+  {/* Remove Button - Redesign */}
+  <div className="flex items-center justify-end">
+    <button
+      onClick={() => handleRemoveItem(item.productId)}
+      className="text-red-500 hover:text-red-700 focus:outline-none p-1 rounded-full transition-all duration-200"
+    >
+      <FaTrashAlt size={14} />
+    </button>
+  </div>
+</div>
+
+
+
           ))}
         </div>
         
-        <div className="p-4 border rounded-lg">
-          <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
-          <p>Total Price: ${totalPrice.toFixed(2)}</p>
+        
 
-          <h3 className="text-xl font-bold mb-4 mt-6">Shipping Information</h3>
+        <div className="bg-[#e8e0d4] p-6 rounded-lg shadow-sm">
+  <h2 className="text-2xl font-normal text-[#4d3d30] mb-4">Order Summary</h2>
+
+  <div className="">
+    {/* Subtotal */}
+    <div className="flex justify-between text-[#4d3d30]">
+      <p className="text-sm font-medium">Subtotal</p>
+      <p className="text-lg font-semibold text-[#4d3d30]">₹{(totalPrice + totalDiscount).toFixed(2)}</p>
+    </div>
+
+    {/* Total Discount */}
+    {totalDiscount > 0 && (
+      <div className="flex justify-between text-green-600">
+        <p className="text-sm font-medium">Total Discount</p>
+        <p className="text-lg font-semibold">- ₹{totalDiscount.toFixed(2)}</p>
+      </div>
+    )}
+
+    {/* Total After Discount */}
+    <div className="flex justify-between text-[#4d3d30]">
+      <p className="text-sm font-medium">Discounted Price</p>
+      <p className="text-lg font-semibold text-[#4d3d30]">₹{(totalPrice).toFixed(2)}</p>
+    </div>
+
+    {/* Delivery Charges */}
+    <div className="flex justify-between text-[#4d3d30]">
+      <p className="text-sm font-medium">Delivery Fee</p>
+      <p className="text-lg font-semibold text-[#4d3d30]">₹0.00</p>
+    </div>
+
+    {/* Packaging Fee */}
+    <div className="flex justify-between text-[#4d3d30]">
+      <p className="text-sm font-medium">Packaging Fee</p>
+      <p className="text-lg font-semibold text-[#4d3d30]">₹0.00</p>
+    </div>
+
+    {/* Grand Total */}
+    <div className="flex justify-between border-t pt-4 mt-6">
+      <p className="text-sm font-medium text-[#4d3d30]">Grand Total</p>
+      <p className="text-xl font-bold text-[#4d3d30]">₹{(totalPrice).toFixed(2)}</p>
+    </div>
+  </div>
+</div>
+
+      
+
+
+           
+          <div className="p-4 border rounded-lg bg-[#e8e0d4]">
+          <h3 className="text-2xl font-normal mb-4 mt-6">Shipping Information</h3>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-1">Full Name</label>
