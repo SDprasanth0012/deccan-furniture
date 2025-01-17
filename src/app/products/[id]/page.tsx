@@ -314,6 +314,7 @@ import ReviewPopup from "@/components/reviewPopup";
 import ProductGallery from "./productImage";
 import ProductSlider from "../productSlider";
 
+
 interface Review {
   name: string;
   rating: number;
@@ -456,9 +457,7 @@ const ProductPage: React.FC = () => {
           <FaStar key={`full-${index}`} size={20} />
         ))}
         {hasHalfStar && <FaStarHalfAlt key="half" size={20} />}
-        {[...Array(5 - fullStars - (hasHalfStar ? 1 : 0))].map((_, index) => (
-          <FaStar key={`empty-${index}`} size={20} className="text-[#e8e0d4]" />
-        ))}
+       
       </div>
     );
   };
@@ -520,6 +519,8 @@ const ProductPage: React.FC = () => {
               ))}
             </ul>
           </div>
+      <div className="text-lg font-normal uppercase py-1 border-t-[1px] border-[#4d3d30] my-4">you may like</div>
+          
           <ProductSlider
            category={product.category as string} 
            />
