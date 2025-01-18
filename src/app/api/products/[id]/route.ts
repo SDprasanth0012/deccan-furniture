@@ -5,13 +5,38 @@ import mongoose from 'mongoose';
 import { validateApiKey } from '@/lib/apiKeyValid';
 
 // GET /api/product/[id]
-export async function GET(request: NextRequest, context: { params?: Promise<{ id?: string }> }) {
+// export async function GET(request: NextRequest, context: { params?: { id?: string } }) {
+//   const apiKeyResponse = await validateApiKey(request);
+//   if (apiKeyResponse) {
+//     return apiKeyResponse;
+//   }
+
+//   const id = (await context.params)?.id;
+
+//   // Validate ID
+//   if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+//     return NextResponse.json({ message: 'Invalid product ID' }, { status: 400 });
+//   }
+
+//   await connectDB();
+//   console.log("Control came here")
+//   try {
+//     const product = await Product.findById(id).exec();
+//     if (!product) {
+//       return NextResponse.json({ message: 'Product not found' }, { status: 404 });
+//     }
+//     return NextResponse.json(product);
+//   } catch (error) {
+//     return NextResponse.json({ message: 'Error fetching product', error: (error as Error).message }, { status: 500 });
+//   }
+// }
+export async function GET(request: NextRequest, context :  any ) {
   const apiKeyResponse = await validateApiKey(request);
   if (apiKeyResponse) {
     return apiKeyResponse;
   }
 
-  const id = (await context.params)?.id;
+  const { id } = context.params;
 
   // Validate ID
   if (!id || !mongoose.Types.ObjectId.isValid(id)) {
@@ -19,7 +44,8 @@ export async function GET(request: NextRequest, context: { params?: Promise<{ id
   }
 
   await connectDB();
-  console.log("Control came here")
+  console.log("Control came here");
+  
   try {
     const product = await Product.findById(id).exec();
     if (!product) {
@@ -32,7 +58,7 @@ export async function GET(request: NextRequest, context: { params?: Promise<{ id
 }
 
 // PUT /api/product/[id]
-export async function PUT(request: NextRequest, context: { params?: Promise<{ id?: string }> }) {
+export async function PUT(request: NextRequest, context: any) {
   const apiKeyResponse = await validateApiKey(request);
   if (apiKeyResponse) {
     return apiKeyResponse;
@@ -101,7 +127,7 @@ export async function PUT(request: NextRequest, context: { params?: Promise<{ id
 }
 
 // DELETE /api/product/[id]
-export async function DELETE(request: NextRequest, context: { params?: Promise<{ id?: string }> }) {
+export async function DELETE(request: NextRequest, context: any ) {
   const apiKeyResponse = await validateApiKey(request);
   if (apiKeyResponse) {
     return apiKeyResponse;
