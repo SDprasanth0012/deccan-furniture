@@ -22,13 +22,13 @@ const ProductGallery: React.FC<{ images: string[] }> = ({ images }) => {
         {images.map((img, index) => (
           <SwiperSlide key={index}>
             <div className="relative w-full h-full">
-              <Image
-                src={img}
-                alt={`Slide ${index}`}
-                layout="fill"
-                objectFit="cover"
-                className="rounded-lg"
-              />
+            <Image
+              src={img}
+              alt={`Slide ${index}`}
+              fill
+              style={{ objectFit: "cover" }}
+              className="rounded-lg"
+            />
             </div>
           </SwiperSlide>
         ))}

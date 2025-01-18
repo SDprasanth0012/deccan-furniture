@@ -96,6 +96,8 @@ function  ProductPageContent() {
           } else if (sortOption === "price-desc") {
             sortedProducts.sort((a, b) => b.price - a.price);
           }
+    console.log("loading products"+selectedCategory);
+
           setProducts(sortedProducts);
         } else {
           console.error("Failed to fetch products");
@@ -106,7 +108,7 @@ function  ProductPageContent() {
         setLoading(false);
       }
     };
-
+    
     fetchProducts();
   }, [selectedCategory, selectedSubcategory, searchTerm, sortOption]);
 
