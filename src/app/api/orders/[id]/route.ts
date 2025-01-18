@@ -3,7 +3,8 @@ import connectDB from '@/lib/db';
 import mongoose from 'mongoose';
 import { validateApiKey } from '@/lib/apiKeyValid';
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const apiKeyResponse = validateApiKey(request);
   if (apiKeyResponse) {
     return apiKeyResponse;
@@ -13,7 +14,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   const { status } = await request.json(); // Extract the new status from the request body
 
   await connectDB(); // Connect to the database
-     console.log("the new status is", status)
+  console.log("the new status is", status)
   try {
     const result = await mongoose.model('Order').findByIdAndUpdate(
       id,
@@ -31,7 +32,8 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const apiKeyResponse = validateApiKey(request);
   if (apiKeyResponse) {
     return apiKeyResponse;

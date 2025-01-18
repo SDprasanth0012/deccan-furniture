@@ -345,7 +345,6 @@ const ProductPage: React.FC = () => {
   const { addToCart } = useCart();
   const { data: session, status } = useSession();
   const router = useRouter();
-
   const [product, setProduct] = useState<Product | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isReviewPopupOpen, setIsReviewPopupOpen] = useState(false);
@@ -411,7 +410,7 @@ const ProductPage: React.FC = () => {
     setReview((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmitReview = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitReview =  async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (status === "loading") return;

@@ -4,7 +4,8 @@ import Product from '@/models/productModel'; // Ensure the correct path to your 
 import {User} from '@/models/userModels'; // Ensure you have a User model to fetch user details
 import { validateApiKey } from '@/lib/apiKeyValid'; // Adjust the path as needed
 
-export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(req: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   // Validate API Key
   const apiKeyResponse = validateApiKey(req);
   if (apiKeyResponse) {

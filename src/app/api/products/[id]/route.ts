@@ -5,13 +5,13 @@ import mongoose from 'mongoose';
 import { validateApiKey } from '@/lib/apiKeyValid';
 
 // GET /api/product/[id]
-export async function GET(request: NextRequest, context: { params?: { id?: string } }) {
+export async function GET(request: NextRequest, context: { params?: Promise<{ id?: string }> }) {
   const apiKeyResponse = await validateApiKey(request);
   if (apiKeyResponse) {
     return apiKeyResponse;
   }
 
-  const id = context.params?.id;
+  const id = (await context.params)?.id;
 
   // Validate ID
   if (!id || !mongoose.Types.ObjectId.isValid(id)) {
@@ -32,13 +32,13 @@ export async function GET(request: NextRequest, context: { params?: { id?: strin
 }
 
 // PUT /api/product/[id]
-export async function PUT(request: NextRequest, context: { params?: { id?: string } }) {
+export async function PUT(request: NextRequest, context: { params?: Promise<{ id?: string }> }) {
   const apiKeyResponse = await validateApiKey(request);
   if (apiKeyResponse) {
     return apiKeyResponse;
   }
 
-  const id = context.params?.id;
+  const id = (await context.params)?.id;
 
   // Validate ID
   if (!id || !mongoose.Types.ObjectId.isValid(id)) {
@@ -101,13 +101,13 @@ export async function PUT(request: NextRequest, context: { params?: { id?: strin
 }
 
 // DELETE /api/product/[id]
-export async function DELETE(request: NextRequest, context: { params?: { id?: string } }) {
+export async function DELETE(request: NextRequest, context: { params?: Promise<{ id?: string }> }) {
   const apiKeyResponse = await validateApiKey(request);
   if (apiKeyResponse) {
     return apiKeyResponse;
   }
 
-  const id = context.params?.id;
+  const id = (await context.params)?.id;
 
   // Validate ID
   if (!id || !mongoose.Types.ObjectId.isValid(id)) {
