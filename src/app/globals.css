@@ -31,4 +31,26 @@ body {
     transform: translateX(0);
   }
 }
+
+
+
+/* target the active bullet */
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+  background-color: #4d3d30;
+  opacity: 1;
+
+
+  border : 2px;
+  border-color : red;
+}
+
+/* target all bullets */
+.swiper-pagination-bullet {
+  background-color: red;
+  opacity: 1;
+}
   
+
+
+
+

@@ -313,6 +313,7 @@ import { useRouter } from "next/navigation";
 import ReviewPopup from "@/components/reviewPopup";
 import ProductGallery from "./productImage";
 import ProductSlider from "../productSlider";
+import FeaturesSection from "../features";
 
 
 interface Review {
@@ -472,9 +473,9 @@ const ProductPage: React.FC = () => {
     <div className="container mx-auto p-4 md:p-8 bg-[#e8e0d4] text-[#4d3d30]">
       <div className="flex flex-col md:flex-row">
         {/* Product Gallery with Swiper */}
-        <ProductGallery images = { product.image} />
+          <ProductGallery images = { product.image} />
         {/* Product Information */}
-        <div className="mt-6 md:w-1/2 md:pl-8 pt-6 md:pt-0">
+          <div className="mt-6 md:w-1/2 md:pl-8 pt-6 lg:self-end md:pt-0">
           <div className="flex flex-col items-start mb-2">
             <span className="text-4xl  font-normal">₹{finalPrice.toFixed(2)}</span>
             {product.discount > 0 && (
@@ -508,9 +509,10 @@ const ProductPage: React.FC = () => {
               <FaShoppingCart className="mr-2" /> Add to Cart
             </Button>
           </div>
-
-          {/* Description */}
-          <div className="mt-4">
+          </div>
+      </div>
+      {/* Description */}
+      <div className="mt-4 lg:mt-12" >
             <h3 className="text-xl font-normal mb-4">DESCRIPTION</h3>
             <p className="text-md uppercase mb-1">{product.description}</p>
             <ul className="list-disc pl-5 ">
@@ -518,12 +520,21 @@ const ProductPage: React.FC = () => {
                 <li key={index} className="text-md uppercase">{feature}</li>
               ))}
             </ul>
-          </div>
+      </div>
+         
       <div className="text-lg font-normal uppercase py-1 border-t-[1px] border-[#4d3d30] my-4">you may like</div>
-          
+          <div className="mb-8 pb-8 border-b-[1px] border-[#4d3d30]">
+
           <ProductSlider
            category={product.category as string} 
            />
+           </div>
+
+      
+          <FeaturesSection />
+
+
+
           {/* Reviews */}
           <div className="mt-8">
             <h3 className="text-xl font-normal uppercase mb-4">Customer Reviews</h3>
@@ -548,8 +559,7 @@ const ProductPage: React.FC = () => {
           >
             Add a Review
           </Button>
-        </div>
-      </div>
+      
 
       {/* Review Popup */}
       {isReviewPopupOpen && (
